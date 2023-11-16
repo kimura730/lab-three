@@ -39,7 +39,7 @@ const DropzoneUploader = (props) => {
             case 'getting_upload_params':
                 break;
             case 'done':
-                alert(`File uploaded to ${process.env.S3_ENDPOINT}/${process.env.S3_BUCKET}/${getBannerFilename('s3-demo')}, please reload`);
+                alert(`File uploaded to ${process.env.REACT_APP_S3_ENDPOINT}/${process.env.REACT_APP_S3_BUCKET}/${getBannerFilename('s3-demo')}, please reload`);
                 break;
             default:
                 break;
