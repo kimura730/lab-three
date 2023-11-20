@@ -42,8 +42,21 @@ const DropzoneUploader = (props) => {
     };
 
     const handleFilename = (filename) => {
-        const regex = /[^a-zA-Z0-9_\-()+&*^\"\'\[\]]/g;
-        return filename.replace(regex, "_");
+        const regex = /^(.+)\.([^\.]+)$/;
+        const match = filename.match(regex);
+        if (match) {
+            const mainFilename = match[1];
+            const subFilename = match[2];
+            const regex = /[^a-zA-Z0-9_\-()+&*^\"\'\[\]]/g;
+            const editedMainFilename = mainFilename.replace(regex, "");
+            if (editedMainFilename.length > 0) {
+                return editedMainFilename + "." + subFilename;
+            } else {
+                return "noroot." + subFilename;
+            }
+        } else {
+            return "Invalid filename format.";
+        }
     };
 
     // file path and file name to be uploaded to the s3 bucket
@@ -72,9 +85,9 @@ const DropzoneUploader = (props) => {
                 getUploadParams={getUploadParams}
                 // onSubmit={handleSubmit}
                 onChangeStatus={handleChange}
-                // submitButtonContent={null}
+                submitButtonContent={null}
                 maxFiles={1}
-                // submitButtonDisabled={true}
+                submitButtonDisabled={true}
                 multiple={false}
                 LayoutComponent={Layout}
                 accept="image/*"
